@@ -27,7 +27,7 @@ function App() {
     return (
         <>
           <main className="container">
-            <h1>Delicous bagels before your eyes</h1>
+            <h1>Delicous Bagels</h1>
             <article className="items">
               {
                   bagels.map((bagel, index) => (
@@ -36,7 +36,7 @@ function App() {
                         <div className="item__details">
                           <p className="item__name">{bagel.name}</p>
                           <p className="item__price">${bagel.price}</p>
-                          <button className="item__btn">Buy</button>
+                          <button className="item__btn">Add to bag</button>
                         </div>
                       </section>
                   ))
