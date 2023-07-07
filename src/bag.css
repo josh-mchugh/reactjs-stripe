@@ -4,6 +4,10 @@
     gap: .5rem;
     margin-left: auto;
     cursor: pointer;
+    color: #222;
+}
+.bag:hover {
+    color: #222;
 }
 .bag__icon {
     width: 2.5rem;

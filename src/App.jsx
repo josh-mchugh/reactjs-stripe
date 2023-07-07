@@ -25,11 +25,14 @@ const bagels = [
 ];
 
 function App() {
+    const onClick = () => {
+        alert("Clicked");
+    };
     return (
         <>
           <header className="container header">
             <h1>Delicous Bagels</h1>
-            <Bag />
+            <Bag onClick={onClick}/>
           </header>
           <main className="container">
             <article className="items">
@@ -40,7 +43,7 @@ function App() {
                         <div className="item__details">
                           <p className="item__name">{bagel.name}</p>
                           <p className="item__price">${bagel.price}</p>
-                          <button className="item__btn">Add to bag</button>
+                          <button className="item__btn" onClick={onClick}>Add to bag</button>
                         </div>
                       </section>
                   ))

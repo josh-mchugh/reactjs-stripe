@@ -3,10 +3,10 @@ import './bag.css';
 
 function Bag(props) {
     return (
-        <section className="bag">
+        <a className="bag" onClick={props.onClick}>
           <BagIcon className="bag__icon"/>
           Cart (0)
-        </section>
+        </a>
     );
 };
 
