@@ -1,6 +1,6 @@
 function ShopItem(props) {
     return (
-        <section key={props.index} className="item">
+        <section className="item">
           <img className="item__image" src={props.imgUrl}/>
           <div className="item__details">
             <p className="item__name">{props.name}</p>
@@ -15,7 +15,7 @@ function ShopItem(props) {
 
 function ShopItemList(props) {
     const items = props.items.map((item, index) =>
-        <ShopItem {...item} index={index} onClick={props.onClick}/>
+        <ShopItem key={index} {...item} onClick={props.onClick}/>
     );
     return (
         <article className="items">
