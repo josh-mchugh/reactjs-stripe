@@ -1,4 +1,5 @@
 import Bag from './Bag';
+import ShopItemList from './ShopItemList';
 import './index.css';
 
 const bagels = [
@@ -35,20 +36,7 @@ function App() {
             <Bag onClick={onClick}/>
           </header>
           <main className="container">
-            <article className="items">
-              {
-                  bagels.map((bagel, index) => (
-                      <section key={index} className="item">
-                        <img className="item__image" src={bagel.imgUrl}/>
-                        <div className="item__details">
-                          <p className="item__name">{bagel.name}</p>
-                          <p className="item__price">${bagel.price}</p>
-                          <button className="item__btn" onClick={onClick}>Add to bag</button>
-                        </div>
-                      </section>
-                  ))
-              }
-            </article>
+            <ShopItemList items={bagels} onClick={onClick}/>
           </main>
           <footer className="footer">
             Copyright@2023
