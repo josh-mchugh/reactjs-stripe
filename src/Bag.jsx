@@ -1,12 +1,13 @@
+import { Link } from 'react-router-dom';
 import BagIcon from './BagIcon';
 import './bag.css';
 
 function Bag(props) {
     return (
-        <a className="bag" onClick={props.onClick}>
+        <Link className="bag" to="/cart">
           <BagIcon className="bag__icon"/>
           Bag (0)
-        </a>
+        </Link>
     );
 };
 

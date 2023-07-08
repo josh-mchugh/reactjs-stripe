@@ -1,3 +1,26 @@
+const bagels = [
+    {
+        name: "Plain Bagel",
+        price: "1.60",
+        imgUrl: "/plain.jpg"
+    },
+    {
+        name: "Sesame Bagel",
+        price: "1.60",
+        imgUrl: "/sesame.jpg"
+    },
+    {
+        name: "Cinnamon Raisin Bagel",
+        price: "1.60",
+        imgUrl: "/cinnamon-raisin.jpg"
+    },
+    {
+        name: "Poppy Bagel",
+        price: "1.60",
+        imgUrl: "/poppy.jpg"
+    }
+];
+
 function ShopItem(props) {
     return (
         <section className="item">
@@ -14,8 +37,11 @@ function ShopItem(props) {
 }
 
 function ShopItemList(props) {
-    const items = props.items.map((item, index) =>
-        <ShopItem key={index} {...item} onClick={props.onClick}/>
+    const onClick = () => {
+        alert("clicked");
+    };
+    const items = bagels.map((item, index) =>
+        <ShopItem key={index} {...item} onClick={onClick}/>
     );
     return (
         <article className="items">
