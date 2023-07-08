@@ -1,25 +1,34 @@
-const bagels = [
-    {
-        name: "Plain Bagel",
-        price: "1.60",
-        imgUrl: "/plain.jpg"
-    },
-    {
-        name: "Sesame Bagel",
-        price: "1.60",
-        imgUrl: "/sesame.jpg"
-    },
-    {
-        name: "Cinnamon Raisin Bagel",
-        price: "1.60",
-        imgUrl: "/cinnamon-raisin.jpg"
-    },
-    {
-        name: "Poppy Bagel",
-        price: "1.60",
-        imgUrl: "/poppy.jpg"
-    }
-];
+import { useLoaderData } from 'react-router-dom';
+
+function loader() {
+    return {
+        items: [
+            {
+                name: "Plain Bagel",
+                price: "1.60",
+                imgUrl: "/plain.jpg"
+            },
+            {
+                name: "Sesame Bagel",
+                price: "1.60",
+                imgUrl: "/sesame.jpg"
+            },
+            {
+                name: "Cinnamon Raisin Bagel",
+                price: "1.60",
+                imgUrl: "/cinnamon-raisin.jpg"
+            },
+            {
+                name: "Poppy Bagel",
+                price: "1.60",
+                imgUrl: "/poppy.jpg"
+            }
+        ],
+        onClick: () => {
+            alert("clicked");
+        }
+    };
+}
 
 function ShopItem(props) {
     return (
@@ -36,18 +45,16 @@ function ShopItem(props) {
     );
 }
 
-function ShopItemList(props) {
-    const onClick = () => {
-        alert("clicked");
-    };
-    const items = bagels.map((item, index) =>
+function ShopItemList() {
+    const { items, onClick } = useLoaderData();
+    const shopItems = items.map((item, index) =>
         <ShopItem key={index} {...item} onClick={onClick}/>
     );
     return (
         <article className="items">
-          { items }
+          { shopItems }
         </article>   
     );
 }
 
-export default ShopItemList;
+export { ShopItemList as default, loader };
