@@ -6,7 +6,7 @@ function App() {
     return (
         <>
           <header className="container header">
-            <h1>Delicous Bagels</h1>
+            <h1>Delicious Bagels</h1>
             <Bag />
           </header>
           <main className="container">
