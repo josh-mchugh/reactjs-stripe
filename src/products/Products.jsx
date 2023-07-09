@@ -34,7 +34,7 @@ function loader() {
     };
 }
 
-function ShopItem(props) {
+function Product(props) {
     return (
         <section className="item">
           <img className="item__image" src={props.imgUrl}/>
@@ -49,16 +49,16 @@ function ShopItem(props) {
     );
 }
 
-function ShopItemList() {
+function Products() {
     const { items, onClick } = useLoaderData();
-    const shopItems = items.map((item) =>
-        <ShopItem key={item.id} {...item} onClick={onClick}/>
+    const products = items.map((item) =>
+        <Product key={item.id} {...item} onClick={onClick}/>
     );
     return (
         <article className="items">
-          { shopItems }
+          { products }
         </article>   
     );
 }
 
-export { ShopItemList as default, loader };
+export { Products as default, loader };

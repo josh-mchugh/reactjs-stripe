@@ -1,14 +1,10 @@
 import { Outlet } from 'react-router-dom';
-import Bag from './Bag';
-import './index.css';
+import Header from './header/Header';
 
 function App() {
     return (
         <>
-          <header className="container header">
-            <h1>Delicious Bagels</h1>
-            <Bag />
-          </header>
+          <Header />
           <main className="container">
             <Outlet />
           </main>

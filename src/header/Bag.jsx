@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import BagIcon from './BagIcon';
-import './bag.css';
 
 function Bag(props) {
     return (
