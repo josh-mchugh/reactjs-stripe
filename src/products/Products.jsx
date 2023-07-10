@@ -1,3 +1,5 @@
+import { connect } from 'react-redux';
+import { addToBag } from '../Actions';
 import { useLoaderData } from 'react-router-dom';
 
 function loader() {
@@ -27,12 +29,16 @@ function loader() {
                 price: "1.60",
                 imgUrl: "/poppy.jpg"
             }
-        ],
-        onClick: () => {
-            alert("clicked");
-        }
+        ]
     };
 }
+
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = (dispatch) => ({
+    onClick: (item) => ( dispatch(addToBag(item)) ),
+    dispatch: dispatch
+});
 
 function Product(props) {
     return (
@@ -49,16 +55,24 @@ function Product(props) {
     );
 }
 
-function Products() {
-    const { items, onClick } = useLoaderData();
+function Products(props) {
+    const { items } = useLoaderData();
     const products = items.map((item) =>
-        <Product key={item.id} {...item} onClick={onClick}/>
+        <Product key={item.id} {...item} onClick={() => props.onClick(item)}/>
     );
     return (
         <article className="items">
           { products }
-        </article>   
+        </article>
     );
 }
 
-export { Products as default, loader };
+const connectedProducts = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Products);
+
+export {
+    connectedProducts as default,
+    loader
+};
