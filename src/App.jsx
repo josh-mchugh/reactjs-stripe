@@ -2,6 +2,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { reducer } from './Reducers';
 import { Outlet } from 'react-router-dom';
+import Footer from './footer/Footer';
 import Header from './header/Header';
 
 const store = createStore(reducer);
@@ -14,9 +15,7 @@ function App() {
             <main className="container">
               <Outlet />
             </main>
-            <footer className="footer">
-              Copyright@2023
-            </footer>
+            <Footer />
           </Provider>
         </>
     );
