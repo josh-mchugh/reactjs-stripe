@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
 }
-.bag {
+.header__bag {
     display: flex;
     align-items: center;
     gap: .5rem;
@@ -10,10 +10,10 @@
     cursor: pointer;
     color: #222;
 }
-.bag:hover {
+.header__bag:hover {
     color: #222;
 }
-.bag__icon {
+.header__icon {
     width: 2.5rem;
     height: 2.5rem;
     margin-bottom: .8rem;
@@ -44,4 +44,39 @@
 .footer {
     text-align: center;
     margin: 2rem 0 2rem 0;
+}
+.bag {
+
+}
+.bag__item {
+    display: flex;
+    padding: 2rem;
+}
+.bag__item > img {
+    width: 10rem;
+    height: 10rem;
+}
+.bag__item > .name {
+    margin-left: 2.5rem;
+}
+.bag__item > .price {
+    margin-left: auto;
+}
+
+.bag__summary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 2rem;
+    border-top: 1px solid #d1d5db;
+}
+.bag__total {
+    grid-column: 1 / 3;
+    margin-left: auto;
+}
+.bag__checkout {
+    grid-column: 1 / 3;
+}
+.checkout__btn {
+    width: 100%;
 }

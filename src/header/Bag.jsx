@@ -12,8 +12,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 function Bag(props) {
     return (
-        <Link className="bag" to="/bag">
-          <BagIcon className="bag__icon"/>
+        <Link className="header__bag" to="/bag">
+          <BagIcon className="header__icon"/>
           Bag ({props.count})
         </Link>
     );
