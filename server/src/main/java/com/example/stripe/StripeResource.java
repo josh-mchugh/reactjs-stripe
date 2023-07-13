@@ -48,6 +48,6 @@ public class StripeResource {
 
         PaymentIntent paymentIntent = PaymentIntent.create(params);
         
-        return Response.ok(paymentIntent.getClientSecret()).build();
+        return Response.ok(new CreatePaymentResponse(paymentIntent.getClientSecret())).build();
     }
 }
