@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Form } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { formatter } from '../CurrencyFormatter';
 
@@ -33,9 +33,9 @@ function Bag(props) {
           { items }
           <section className="bag__summary">
             <p className="bag__total">Total: { formatter.format(total) }</p>
-            <Link className="bag__checkout" to="/checkout">
-              <button className="checkout__btn" type="button">Checkout</button>
-            </Link>
+            <Form className="bag__checkout" method="get" action="/checkout">
+              <button className="checkout__btn" type="submit">Checkout</button>
+            </Form>
           </section>
         </article>
     );
