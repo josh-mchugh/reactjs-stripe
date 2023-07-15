@@ -15,33 +15,29 @@ function CheckoutForm() {
     const [ isLoading, setIsLoading ] = useState(false);
 
     useEffect(() => {
-        if(!stripe) {
-            return;
-        }
-
         const clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
-
-        if(!clientSecret) {
-            return;
+        if(stripe && clientSecret) {
+            stripe.retrievePaymentIntent(clientSecret)
+                .then(handlePaymentIntentStatus);
         }
-
-        stripe.retrievePaymentIntent(clientSecret).then(({paymentIntent}) => {
-            switch(paymentIntent.status) {
-              case "succeeded":
-                setMessage("Payment succeeded!");
-                break;
-              case "processing":
-                setMessage("Your payment is processing.");
-                break;
-              case "requires_payment_method":
-                setMessage("Your payment was not successful, please try again.");
-                break;
-              default:
-                setMessage("Something went wrong.");
-                break;
-            }
-        });
     }, [stripe]);
+
+    const handlePaymentIntentStatus = ({paymentIntent}) => {
+        switch(paymentIntent.status) {
+        case "succeeded":
+            setMessage("Payment succeeded!");
+            break;
+        case "processing":
+            setMessage("Your payment is processing.");
+            break;
+        case "requires_payment_method":
+            setMessage("Your payment was not successful, please try again.");
+            break;
+        default:
+            setMessage("Something went wrong.");
+            break;
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -52,24 +48,24 @@ function CheckoutForm() {
 
         setIsLoading(true);
 
-        const { error } = await stripe.confirmPayment({
+        stripe.confirmPayment({
             elements,
             confirmParams: {
                 return_url: "http://localhost:5173/checkout"
             }
+        }).then(({error}) => {
+            if(error.type === "card_error" || error.type === "validation_error") {
+                setMessage(error.message);
+            } else {
+                setMessage("An unexpected error occurred.");
+            }
+
+            setIsLoading(false);
         });
-
-        if(error.type === "card_error" || error.type === "validation_error") {
-            setMessage(error.message);
-        } else {
-            setMessage("An unexpected error occurred.");
-        }
-
-        setIsLoading(false);
     };
 
     const handleChange = (e) => {
-        setEmail(e.target.value)
+        setEmail(e.target.value);
     };
 
     const paymentElementOptions = {
@@ -82,7 +78,10 @@ function CheckoutForm() {
             id="link-authentication-element"
             onChange={handleChange}
           />
-          <PaymentElement id="payment-element" options={paymentElementOptions}/>
+          <PaymentElement
+            id="payment-element"
+            options={paymentElementOptions}
+          />
           <button
             id="submit"
             disabled={isLoading || !stripe || !elements}
