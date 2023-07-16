@@ -22,8 +22,11 @@ import jakarta.ws.rs.core.Response;
 @ApplicationScoped
 public class StripeResource {
 
-    public StripeResource(@ConfigProperty(name = "stripe.api.key") String stripeApiKey) {
+    private ProductService productService;
+
+    public StripeResource(@ConfigProperty(name = "stripe.api.key") String stripeApiKey, ProductService productService ) {
         Stripe.apiKey = stripeApiKey;
+        this.productService = productService;
     }
 
     public record CreatePaymentRequest(List<String> itemIds) { }
@@ -42,7 +45,7 @@ public class StripeResource {
 
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
             .setCurrency("usd")
-            .setAmount(1400l)
+            .setAmount(productService.getProductItemsTotal(payment.itemIds()))
             .setAutomaticPaymentMethods(paymentMethods)
             .build();
 
@@ -51,3 +54,4 @@ public class StripeResource {
         return Response.ok(new CreatePaymentResponse(paymentIntent.getClientSecret())).build();
     }
 }
+

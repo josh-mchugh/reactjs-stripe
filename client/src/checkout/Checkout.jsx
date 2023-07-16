@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
@@ -6,7 +7,15 @@ import CheckoutForm from './CheckoutForm';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
-function Checkout() {
+const mapStateToProps = (state) => ({
+    bag: state.bag
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch: dispatch
+});
+
+function Checkout(props) {
     const [ clientSecret, setClientSecret ] = useState("");
     useEffect(() => {
         fetch("/create-payment-intent", {
@@ -14,7 +23,9 @@ function Checkout() {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ itemIds: ["asdf"] })
+            body: JSON.stringify({
+                itemIds: props.bag ? props.bag.map(item => item.id) : []
+            })
         })
             .then(res => res.json())
             .then(data => setClientSecret(data.clientSecret));
@@ -38,4 +49,7 @@ function Checkout() {
     );
 }
 
-export default Checkout;
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Checkout);
