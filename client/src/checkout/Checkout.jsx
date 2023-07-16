@@ -18,18 +18,24 @@ const mapDispatchToProps = (dispatch) => ({
 function Checkout(props) {
     const [ clientSecret, setClientSecret ] = useState("");
     useEffect(() => {
+        if(props.bag.length) {
+            fetchPaymentIntent();
+        }
+    }, []);
+
+    function fetchPaymentIntent() {
         fetch("/create-payment-intent", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                itemIds: props.bag ? props.bag.map(item => item.id) : []
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    itemIds: props.bag ? props.bag.map(item => item.id) : []
+                })
             })
-        })
             .then(res => res.json())
             .then(data => setClientSecret(data.clientSecret));
-    }, []);
+    }
 
     const appearance = {
         theme: 'stripe'
@@ -40,6 +46,7 @@ function Checkout(props) {
     };
     return (
         <div className="">
+          { props.bag.length === 0 && <div>Bag is empty!</div>}
           { clientSecret && (
               <Elements options={options} stripe={stripePromise}>
                 <CheckoutForm />
