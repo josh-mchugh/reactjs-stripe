@@ -1,4 +1,4 @@
-import { Form } from 'react-router-dom';
+import { Form, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { formatter } from '../CurrencyFormatter';
 
@@ -9,6 +9,46 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     dispatch: dispatch
 });
+
+function EmptyBag() {
+    return (
+        <section className="empty-bag">
+          <h2 className="empty-bag__header">Bag is empty</h2>
+          <p className="empty-bag__instruction">Add a product to your back to checkout.</p>
+          <Link className="empty-bag__link" to="/">
+            Back to shopping
+          </Link>
+        </section>
+    );
+}
+
+function BagForm(props) {
+    const items = props.bag.map(item =>
+        <Item key={item.id} {...item} />
+    );
+    const total = props.bag.reduce((accumulator, item) =>
+        accumulator + item.price,
+        0
+    );
+    return (
+        <>
+          { items }
+          <section className="bag__summary">
+            <p className="bag__total">
+              Total: { formatter.format(total) }
+            </p>
+            <Form className="bag__checkout"
+                  method="get"
+                  action="/checkout"
+            >
+              <button className="checkout__btn" type="submit">
+                Checkout
+              </button>
+            </Form>
+          </section>
+        </>
+    );
+}
 
 function Item(props) {
     return (
@@ -21,22 +61,10 @@ function Item(props) {
 }
 
 function Bag(props) {
-    const items = props.bag.map(item =>
-        <Item key={item.id} {...item} />
-    );
-    const total = props.bag.reduce((accumulator, item) =>
-        accumulator + item.price,
-        0
-    );
+    const emptyBag = props.bag.length === 0;
     return (
         <article className="bag">
-          { items }
-          <section className="bag__summary">
-            <p className="bag__total">Total: { formatter.format(total) }</p>
-            <Form className="bag__checkout" method="get" action="/checkout">
-              <button className="checkout__btn" type="submit">Checkout</button>
-            </Form>
-          </section>
+          {emptyBag ? <EmptyBag /> : <BagForm {...props}/>}  
         </article>
     );
 }
