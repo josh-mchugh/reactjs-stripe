@@ -54,12 +54,9 @@ function CheckoutForm() {
                 return_url: "http://localhost:5173/checkout"
             }
         }).then(({error}) => {
-            if(error.type === "card_error" || error.type === "validation_error") {
-                setMessage(error.message);
-            } else {
-                setMessage("An unexpected error occurred.");
-            }
-
+            const hasErrorType = ['card_error', 'validation_error'].includes(error.type);
+            const message = hasErrorType ? error.message : "An unexpected error occurred.";
+            setMessage(message);
             setIsLoading(false);
         });
     };
