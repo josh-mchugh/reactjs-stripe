@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     PaymentElement,
     LinkAuthenticationElement,
@@ -14,31 +14,6 @@ function CheckoutForm() {
     const [ message, setMessage ] = useState(null);
     const [ isLoading, setIsLoading ] = useState(false);
 
-    useEffect(() => {
-        const clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
-        if(stripe && clientSecret) {
-            stripe.retrievePaymentIntent(clientSecret)
-                .then(handlePaymentIntentStatus);
-        }
-    }, [stripe]);
-
-    const handlePaymentIntentStatus = ({paymentIntent}) => {
-        switch(paymentIntent.status) {
-        case "succeeded":
-            setMessage("Payment succeeded!");
-            break;
-        case "processing":
-            setMessage("Your payment is processing.");
-            break;
-        case "requires_payment_method":
-            setMessage("Your payment was not successful, please try again.");
-            break;
-        default:
-            setMessage("Something went wrong.");
-            break;
-        }
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -51,7 +26,7 @@ function CheckoutForm() {
         stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: "http://localhost:5173/checkout"
+                return_url: "http://localhost:5173/checkout/complete"
             }
         }).then(({error}) => {
             const hasErrorType = ['card_error', 'validation_error'].includes(error.type);

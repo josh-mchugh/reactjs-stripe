@@ -5,6 +5,7 @@ import App from './App.jsx';
 import Products, { loader } from './products/Products';
 import Bag from './bag/Bag';
 import Checkout from './checkout/Checkout';
+import CheckoutComplete from './checkout/CheckoutComplete';
 
 const router = createBrowserRouter([
     {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
             {
                 path: "/checkout",
                 element: <Checkout />
+            },
+            {
+                path: "/checkout/complete",
+                element: <CheckoutComplete />
             }
         ]
     }
