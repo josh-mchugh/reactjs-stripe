@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import { addToBag } from '../Actions';
+import { addToBag } from './Actions';
 import { useLoaderData } from 'react-router-dom';
-import { formatter } from '../CurrencyFormatter';
+import { formatter } from './CurrencyFormatter';
 
 function loader() {
     return {

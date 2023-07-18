@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.jsx';
-import Products, { loader } from './products/Products';
-import Bag from './bag/Bag';
-import Checkout from './checkout/Checkout';
-import CheckoutComplete from './checkout/CheckoutComplete';
+import Products, { loader } from './Products';
+import Bag from './Bag';
+import Checkout from './Checkout';
+import CheckoutComplete from './CheckoutComplete';
 
 const router = createBrowserRouter([
     {

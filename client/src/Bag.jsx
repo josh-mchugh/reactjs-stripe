@@ -1,6 +1,6 @@
 import { Form, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { formatter } from '../CurrencyFormatter';
+import { formatter } from './CurrencyFormatter';
 
 const mapStateToProps = (state) => ({
     bag: state.bag

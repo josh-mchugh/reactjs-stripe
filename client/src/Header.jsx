@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Bag from './Bag';
+import BagIcon from './BagIcon';
 
 function Header() {
     return (
@@ -7,7 +7,7 @@ function Header() {
           <Link className="header__brand" to="/">
             <h1>Delicious Bagels</h1>
           </Link>
-          <Bag />
+          <BagIcon />
         </header>
     );
 }

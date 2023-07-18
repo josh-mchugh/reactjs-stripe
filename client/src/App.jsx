@@ -2,7 +2,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { reducer } from './Reducers';
 import { Outlet } from 'react-router-dom';
-import Header from './header/Header';
+import Header from './Header';
 
 const store = createStore(reducer);
 
