@@ -101,3 +101,16 @@
 .checkout__btn {
     width: 100%;
 }
+.checkout-complete {
+    display: flex;
+    flex-direction: column;
+}
+.checkout-complete__header {
+    margin: 8rem auto 0 auto;
+}
+.checkout-complete__subheader {
+    margin: 2rem auto 0 auto;
+}
+.checkout-complete__return {
+    margin: 2rem auto 0 auto;
+}
