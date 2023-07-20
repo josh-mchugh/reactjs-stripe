@@ -33,6 +33,14 @@ public class StripeResource {
 
     public record CreatePaymentResponse(String clientSecret) { }
 
+    @GET
+    @Path("/products")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProducts() {
+        
+        return Response.ok(productService.getProducts()).build();
+    }
+
     @POST
     @Path("/create-payment-intent")
     @Consumes(MediaType.APPLICATION_JSON)

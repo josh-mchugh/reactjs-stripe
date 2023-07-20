@@ -6,6 +6,7 @@ export default defineConfig({
     plugins: [react()],
     server: {
         proxy: {
+            '/products': 'http://localhost:8080',
             '/create-payment-intent': 'http://localhost:8080'
         }
     }

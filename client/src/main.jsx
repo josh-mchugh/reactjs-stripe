@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.jsx';
-import Products, { loader } from './Products';
+import Products from './Products';
 import Bag from './Bag';
 import Checkout from './Checkout';
 import CheckoutComplete from './CheckoutComplete';
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <Products />,
-                loader: loader
+                loader: async () => await fetch("/products")
             },
             {
                 path: "/bag",
