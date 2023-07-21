@@ -2,12 +2,7 @@ package com.example.stripe;
 
 import java.util.List;
 
-import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
-import com.stripe.model.PaymentIntent;
-import com.stripe.param.PaymentIntentCreateParams;
-
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.Consumes;
@@ -22,10 +17,11 @@ import jakarta.ws.rs.core.Response;
 @ApplicationScoped
 public class StripeResource {
 
+    private PaymentService paymentService;
     private ProductService productService;
 
-    public StripeResource(@ConfigProperty(name = "stripe.api.key") String stripeApiKey, ProductService productService ) {
-        Stripe.apiKey = stripeApiKey;
+    public StripeResource(PaymentService paymentService, ProductService  productService ) {
+        this.paymentService = paymentService;
         this.productService = productService;
     }
 
@@ -47,19 +43,14 @@ public class StripeResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response postCreatePaymentIntent(CreatePaymentRequest payment) throws StripeException {;
 
-        PaymentIntentCreateParams.AutomaticPaymentMethods paymentMethods = PaymentIntentCreateParams.AutomaticPaymentMethods.builder()
-            .setEnabled(true)
-            .build();
+        // calculate total amount of items for payment request
+        long amount = productService.getProductItemsTotal(payment.itemIds());
 
-        PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
-            .setCurrency("usd")
-            .setAmount(productService.getProductItemsTotal(payment.itemIds()))
-            .setAutomaticPaymentMethods(paymentMethods)
-            .build();
+        // use payment service to get payment intent for client secret
+        String clientSercret = paymentService.handlePaymentIntent(amount);
 
-        PaymentIntent paymentIntent = PaymentIntent.create(params);
-        
-        return Response.ok(new CreatePaymentResponse(paymentIntent.getClientSecret())).build();
+        CreatePaymentResponse response = new CreatePaymentResponse(clientSercret);
+
+        return Response.ok(response).build();
     }
 }
-
