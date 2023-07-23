@@ -1,7 +1,5 @@
 package com.example.stripe;
 
-import java.util.Optional;
-
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
